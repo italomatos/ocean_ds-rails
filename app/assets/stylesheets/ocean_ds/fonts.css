@@ -1,0 +1,87 @@
+/* Ocean DS — @font-face (CSS puro p/ Propshaft, sem Sass).
+   Gerado de @useblu/ocean-tokens. NÃO edite à mão: rode `rake ocean:update`.
+   As url() são relativas a este arquivo (logical dir ocean_ds/),
+   então o Propshaft as resolve para ocean_ds/<Familia>/<arquivo> com digest. */
+
+/********** Nunito Sans *********/
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: local('Nunito Sans Light'), local('NunitoSans-Light'),
+    url('NunitoSans/NunitoSans-Light.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Nunito Sans Regular'), local('NunitoSans-Regular'),
+    url('NunitoSans/NunitoSans-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Nunito Sans SemiBold'), local('NunitoSans-SemiBold'),
+    url('NunitoSans/NunitoSans-SemiBold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Nunito Sans Bold'), local('NunitoSans-Bold'),
+    url('NunitoSans/NunitoSans-Bold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: local('Nunito Sans ExtraBold'), local('NunitoSans-ExtraBold'),
+    url('NunitoSans/NunitoSans-ExtraBold.woff2') format('woff2');
+}
+/********** Avenir *********/
+@font-face {
+  font-family: 'Avenir';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: local('Avenir Light'), local('Avenir-Light'),
+    url('Avenir/Avenir-Light.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Avenir';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Avenir Roman'), local('Avenir-Roman'),
+    url('Avenir/Avenir-Roman.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Avenir';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Avenir Medium'), local('Avenir-Medium'),
+    url('Avenir/Avenir-Medium.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Avenir';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Avenir Heavy'), local('Avenir-Heavy'),
+    url('Avenir/Avenir-Heavy.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Avenir';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: local('Avenir Black'), local('Avenir-Black'),
+    url('Avenir/Avenir-Black.woff2') format('woff2');
+}

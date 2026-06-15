@@ -3,33 +3,32 @@ require "rails"
 module OceanDS
   module Rails
     # Registra os assets do Ocean DS no pipeline do host, cobrindo tanto
-    # Sprockets quanto Propshaft.
+    # Propshaft quanto Sprockets — ambos leem `config.assets.paths`.
     #
-    # - Propshaft: varre `app/assets/**` das engines automaticamente e reescreve
-    #   as url() com digest. Os arquivos sob `vendor/assets/stylesheets` (tokens
-    #   e fontes SCSS) são adicionados explicitamente ao load path.
-    # - Sprockets: adiciona os diretórios a `config.assets.paths` e marca os CSS
-    #   compilados para precompile.
+    # - Propshaft: serve tudo que está no load path e reescreve as url() do CSS
+    #   com digest (o `fonts.css` referencia as fontes por caminho relativo).
+    # - Sprockets: além dos paths, marca os CSS compilados para precompile.
     class Engine < ::Rails::Engine
       initializer "ocean_ds.assets" do |app|
-        vendor_path = root.join("vendor", "assets", "stylesheets").to_s
+        next unless app.config.respond_to?(:assets) && app.config.assets.respond_to?(:paths)
 
-        if app.config.respond_to?(:assets)
-          # Sprockets (sprockets-rails)
-          app.config.assets.paths << root.join("app", "assets", "stylesheets").to_s
-          app.config.assets.paths << root.join("app", "assets", "fonts").to_s
-          app.config.assets.paths << vendor_path
+        paths = [
+          root.join("app", "assets", "stylesheets").to_s,
+          root.join("app", "assets", "fonts").to_s,
+          root.join("vendor", "assets", "stylesheets").to_s
+        ]
+        # Vale para Propshaft e Sprockets: ambos leem config.assets.paths.
+        paths.each { |p| app.config.assets.paths << p unless app.config.assets.paths.include?(p) }
+
+        # precompile só existe/importa no Sprockets. No Propshaft é nil
+        # (OrderedOptions) e tudo no load path já é servido — então só mexe
+        # quando for de fato um Array, evitando NoMethodError no boot.
+        if app.config.assets.precompile.is_a?(Array)
           app.config.assets.precompile += %w[
             ocean_ds/ocean.css
             ocean_ds/ocean.min.css
+            ocean_ds/fonts.css
           ]
-        end
-
-        # Propshaft: garante que tokens/fontes SCSS fiquem visíveis para o
-        # compilador Sass (dartsass-rails/cssbundling) via load_paths.
-        if defined?(::Propshaft) && app.config.respond_to?(:assets) &&
-           app.config.assets.respond_to?(:paths)
-          app.config.assets.paths << vendor_path unless app.config.assets.paths.include?(vendor_path)
         end
       end
 

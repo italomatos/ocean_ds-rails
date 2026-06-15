@@ -29,30 +29,34 @@ O generator detecta o pipeline e injeta a linha de carregamento do CSS no lugar 
 
 ## Uso
 
-### Componentes (CSS compilado)
+### Componentes + fontes (CSS compilado)
 
-Funciona **sem compilador Sass**.
+Funciona **sem compilador Sass**. São dois stylesheets: `ocean_ds/fonts` (as declarações
+`@font-face` de Avenir e Nunito Sans) e `ocean_ds/ocean` (as classes de componente). O
+`ocean.css` **não** inclui `@font-face` — ele só pede as famílias `"Avenir"`/`"Nunito Sans"`,
+então **sem o `ocean_ds/fonts` o navegador cai numa fonte de fallback**.
 
-- **Propshaft:** no layout
+- **Propshaft:** no layout (o generator já injeta esta linha)
   ```erb
-  <%= stylesheet_link_tag "ocean_ds/ocean" %>
+  <%= stylesheet_link_tag "ocean_ds/fonts", "ocean_ds/ocean" %>
   ```
 - **Sprockets:** em `app/assets/stylesheets/application.css`
   ```css
   /*
+   *= require ocean_ds/fonts
    *= require ocean_ds/ocean
    */
   ```
 
 Depois é só usar as classes do Ocean no HTML.
 
-### Tokens SCSS + fontes (opcional)
+### Tokens SCSS (opcional — requer Sass)
 
-Para usar as variáveis do Ocean nos seus próprios estilos e carregar as fontes, **requer um
-compilador Sass** (`dartsass-rails`/`cssbundling` no Propshaft, `sass-rails` no Sprockets):
+Para usar as **variáveis** do Ocean nos seus próprios estilos você precisa de um compilador Sass
+(`dartsass-rails`/`cssbundling` no Propshaft, `sass-rails` no Sprockets):
 
 ```scss
-@import "ocean_ds/ocean_ds"; // = fontes (@font-face) + tokens (variáveis)
+@import "ocean_ds/tokens";
 
 .minha-classe {
   color: $color-brand-primary-pure;
@@ -61,18 +65,9 @@ compilador Sass** (`dartsass-rails`/`cssbundling` no Propshaft, `sass-rails` no 
 }
 ```
 
-> Você também pode importar só os tokens (`@import "ocean_ds/tokens";`) ou só as fontes
-> (`@import "ocean_ds/fonts";`).
-
-#### Caminho das fontes
-
-`_fonts.scss` usa a variável `$ocean-ds-font-path` (padrão `"ocean_ds"`), que resolve no Propshaft.
-No Sprockets você pode sobrescrevê-la antes do `@import` se precisar:
-
-```scss
-$ocean-ds-font-path: asset-path("ocean_ds");
-@import "ocean_ds/fonts";
-```
+> As fontes **não** dependem de Sass: já são carregadas pelo `ocean_ds/fonts` (CSS puro). Se você
+> usa Sass e prefere o partial, existe também `@import "ocean_ds/fonts";` (`_fonts.scss`), que usa a
+> variável `$ocean-ds-font-path` (padrão `"ocean_ds"`).
 
 ## Manutenção / atualização do upstream
 

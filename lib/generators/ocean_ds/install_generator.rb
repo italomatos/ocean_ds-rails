@@ -47,22 +47,25 @@ module OceanDS
       end
 
       def install_propshaft
+        # fonts.css (@font-face) + ocean.css (componentes). Sem o fonts.css os
+        # componentes pedem "Avenir"/"Nunito Sans" e o navegador cai no fallback.
+        tag = %(<%= stylesheet_link_tag "ocean_ds/fonts", "ocean_ds/ocean", "data-turbo-track": "reload" %>)
         layout = Dir.glob(File.join(destination_root, "app/views/layouts/application.html.{erb,haml,slim}")).first
-        if layout
-          inject_into_file layout,
-            %(    <%= stylesheet_link_tag "ocean_ds/ocean", "data-turbo-track": "reload" %>\n),
-            after: %r{<%= stylesheet_link_tag .*%>\n}
+        if layout && File.read(layout) =~ %r{<%= stylesheet_link_tag }
+          inject_into_file layout, "    #{tag}\n", after: %r{<%= stylesheet_link_tag .*%>\n}
+        elsif layout
+          inject_into_file layout, "    #{tag}\n", before: %r{</head>}
         else
-          say "Não encontrei o layout application. Adicione manualmente:", :yellow
-          say %(  <%= stylesheet_link_tag "ocean_ds/ocean" %>), :yellow
+          say "Não encontrei o layout application. Adicione no <head>:", :yellow
+          say "  #{tag}", :yellow
         end
       end
 
       def print_instructions
-        say "\nOcean DS instalado.", :green
-        say "Para usar os tokens SCSS (variáveis) e as fontes nos seus estilos, adicione no seu .scss:", :green
-        say %(  @import "ocean_ds/ocean_ds"; // fontes + tokens), :green
-        say "(requer um compilador Sass: dartsass-rails ou sass-rails)", :green
+        say "\nOcean DS instalado (componentes + fontes @font-face).", :green
+        say "Opcional — para usar os tokens (variáveis $color-*, $spacing-*) nos seus", :green
+        say "próprios estilos, você precisa de um compilador Sass (dartsass-rails/sass-rails) e:", :green
+        say %(  @import "ocean_ds/tokens";), :green
       end
     end
   end

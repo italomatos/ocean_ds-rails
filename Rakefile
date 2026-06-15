@@ -36,10 +36,17 @@ namespace :ocean do
       FileUtils.mkdir_p(fonts_dest)
       FileUtils.cp_r(Dir[File.join(tokens, "assets/fonts/*")], fonts_dest)
 
-      # 4) @font-face -> _fonts.scss com caminho configurável
+      # 4) @font-face em dois formatos:
+      #    - _fonts.scss (Sass, caminho configurável) p/ quem tem compilador
+      #    - fonts.css   (CSS puro, caminho relativo) p/ Propshaft sem Sass
+      upstream_fonts = File.join(tokens, "assets/css/fonts.css")
       generate_fonts_scss(
-        File.join(tokens, "assets/css/fonts.css"),
+        upstream_fonts,
         File.join(ROOT, "vendor/assets/stylesheets/ocean_ds/_fonts.scss")
+      )
+      generate_fonts_css(
+        upstream_fonts,
+        File.join(ROOT, "app/assets/stylesheets/ocean_ds/fonts.css")
       )
 
       # 5) Atualiza as versões registradas em version.rb
@@ -88,6 +95,20 @@ def generate_fonts_scss(src, dest)
     // Gerado a partir de @useblu/ocean-tokens (assets/css/fonts.css).
     // NÃO edite à mão: rode `rake ocean:update` para regenerar.
     $ocean-ds-font-path: "ocean_ds" !default;
+
+  HDR
+  File.write(dest, header + css)
+end
+
+def generate_fonts_css(src, dest)
+  css = File.read(src)
+  # ../fonts/Foo/Bar.woff2 -> Foo/Bar.woff2 (relativo ao próprio fonts.css em ocean_ds/)
+  css = css.gsub(%r{\.\./fonts/}, "")
+  header = <<~HDR
+    /* Ocean DS — @font-face (CSS puro p/ Propshaft, sem Sass).
+       Gerado de @useblu/ocean-tokens. NÃO edite à mão: rode `rake ocean:update`.
+       As url() são relativas a este arquivo (logical dir ocean_ds/),
+       então o Propshaft as resolve para ocean_ds/<Familia>/<arquivo> com digest. */
 
   HDR
   File.write(dest, header + css)
