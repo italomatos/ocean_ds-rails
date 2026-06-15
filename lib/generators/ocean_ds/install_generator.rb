@@ -7,6 +7,10 @@ module OceanDS
     # Detecta o pipeline (Propshaft vs Sprockets) e injeta as linhas para
     # carregar o Ocean DS no manifesto de estilos do host.
     class InstallGenerator < ::Rails::Generators::Base
+      # Sem isto, o Rails infere o namespace de `OceanDS` como "ocean_d_s"
+      # (OceanDS.underscore == "ocean_d_s"), quebrando `rails g ocean_ds:install`.
+      namespace "ocean_ds:install"
+
       source_root File.expand_path("templates", __dir__)
 
       def install
@@ -20,18 +24,24 @@ module OceanDS
 
       private
 
+      # Sinal confiável: o Sprockets só está carregado quando o app usa
+      # sprockets-rails. Apps Propshaft não carregam ::Sprockets.
       def sprockets?
-        defined?(::Sprockets::Rails) &&
-          File.exist?(File.join(destination_root, "app/assets/config/manifest.js")) ||
-          Dir.glob(File.join(destination_root, "app/assets/stylesheets/application.{css,scss,sass}")).any? { |f| f.end_with?(".css") && File.read(f).include?("require_tree") }
+        defined?(::Sprockets::Rails) || defined?(::Sprockets)
       end
 
       def install_sprockets
-        manifest = File.join(destination_root, "app/assets/stylesheets/application.css")
-        if File.exist?(manifest)
+        manifest = Dir.glob(
+          File.join(destination_root, "app/assets/stylesheets/application.{css,scss,sass}")
+        ).first
+
+        if manifest && manifest.end_with?(".css")
           inject_into_file manifest, " *= require ocean_ds/ocean\n", before: %r{\*/}
+        elsif manifest
+          # application.scss/.sass: usa @import do índice (fontes + tokens) + componentes
+          append_to_file manifest, %(\n@import "ocean_ds/ocean_ds";\n)
         else
-          say "Não encontrei app/assets/stylesheets/application.css.", :yellow
+          say "Não encontrei o manifesto app/assets/stylesheets/application.(css|scss).", :yellow
           say "Adicione manualmente: *= require ocean_ds/ocean", :yellow
         end
       end
