@@ -1,0 +1,87 @@
+// Ocean DS — @font-face declarations
+// Gerado a partir de @useblu/ocean-tokens (assets/css/fonts.css).
+// NÃO edite à mão: rode `rake ocean:update` para regenerar.
+$ocean-ds-font-path: "ocean_ds" !default;
+
+/********** Nunito Sans *********/
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: local('Nunito Sans Light'), local('NunitoSans-Light'),
+    url('#{$ocean-ds-font-path}/NunitoSans/NunitoSans-Light.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Nunito Sans Regular'), local('NunitoSans-Regular'),
+    url('#{$ocean-ds-font-path}/NunitoSans/NunitoSans-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Nunito Sans SemiBold'), local('NunitoSans-SemiBold'),
+    url('#{$ocean-ds-font-path}/NunitoSans/NunitoSans-SemiBold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Nunito Sans Bold'), local('NunitoSans-Bold'),
+    url('#{$ocean-ds-font-path}/NunitoSans/NunitoSans-Bold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: local('Nunito Sans ExtraBold'), local('NunitoSans-ExtraBold'),
+    url('#{$ocean-ds-font-path}/NunitoSans/NunitoSans-ExtraBold.woff2') format('woff2');
+}
+/********** Avenir *********/
+@font-face {
+  font-family: 'Avenir';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: local('Avenir Light'), local('Avenir-Light'),
+    url('#{$ocean-ds-font-path}/Avenir/Avenir-Light.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Avenir';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Avenir Roman'), local('Avenir-Roman'),
+    url('#{$ocean-ds-font-path}/Avenir/Avenir-Roman.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Avenir';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Avenir Medium'), local('Avenir-Medium'),
+    url('#{$ocean-ds-font-path}/Avenir/Avenir-Medium.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Avenir';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Avenir Heavy'), local('Avenir-Heavy'),
+    url('#{$ocean-ds-font-path}/Avenir/Avenir-Heavy.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Avenir';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: local('Avenir Black'), local('Avenir-Black'),
+    url('#{$ocean-ds-font-path}/Avenir/Avenir-Black.woff2') format('woff2');
+}

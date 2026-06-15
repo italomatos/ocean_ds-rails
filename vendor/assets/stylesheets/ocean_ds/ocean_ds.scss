@@ -1,0 +1,6 @@
+// Ocean DS — entrypoint SCSS de conveniência.
+// Traz as fontes e os tokens (variáveis) para uso nos seus próprios estilos.
+// As classes de componentes vêm do CSS já compilado: inclua também
+// `ocean_ds/ocean` (via stylesheet_link_tag ou `*= require ocean_ds/ocean`).
+@import "ocean_ds/fonts";
+@import "ocean_ds/tokens";

@@ -1,0 +1,9 @@
+{
+  "name": "ocean_ds-rails-upstream-pins",
+  "private": true,
+  "description": "Pin das versões upstream do Ocean DS vendorizadas pela gem. Usado por `rake ocean:update`.",
+  "dependencies": {
+    "@useblu/ocean-core": "1.136.0",
+    "@useblu/ocean-tokens": "3.8.1"
+  }
+}
